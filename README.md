@@ -19,7 +19,29 @@ pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation -
 ```
 
 ## Data Tree
-The algorithm takes 3D images of size `H x W x C` in NPY format as inputs. An example for the folder structure of training data is given in the `Training_Data` folder.
+The algorithm takes 3D images of size `H x W x C` in NPY format as inputs. An example for the folder structure of training data is given in the `Training_Data` folder. The structure must be as follows
+```
+Training_Data
+   |
+   + Dataset_1
+   |    |
+   |    + 001.npy
+   |    + 002.npy
+   |    + ...
+   |
+   + Dataset_2
+   |    |
+   |    + 001.npy
+   |    + 002.npy
+   |    + ...
+   |
+   + Dataset_3
+   |    |
+   |    + 001.npy
+   |    + 002.npy
+   |    + ...
+   ...
+```
 
 ## 2D SSL Training
 We use [VISSL](https://github.com/facebookresearch/vissl) to train SSL methods (DeepCluster and SwAV) with 2D images.
