@@ -1,6 +1,6 @@
 # Joint Self-Supervised Image-Volume Representation Learning with Intra-inter Contrastive Clustering
 
-Accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687)
+We release the algorithm in our paper accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687). 
 
 ![Overview](./figures/Overview.png)
 
