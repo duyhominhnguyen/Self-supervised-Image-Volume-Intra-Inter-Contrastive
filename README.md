@@ -4,7 +4,7 @@ We release the algorithm in our paper accepted in [AAAI Conference on Artificial
 
 - :construction: Downstream task illustrations.
 - :construction: Configure [VISSL](https://vissl.ai/) framework to train 2D-SSL parts (baselines).
-- :mega: 3D self-supervised parts in the proposed framework are ready.
+- :mega: **24.12.2023**: 3D self-supervised parts in the proposed framework are ready.
 
 ![Overview](./figures/Overview.png)
 
