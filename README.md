@@ -2,8 +2,13 @@
 
 We release the algorithm in our paper accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687). 
 
+- :construction: Downstream task illustrations.
+- :construction: Configure [VISSL](https://vissl.ai/) framework to train 2D-SSL parts (baselines)
+- :mega: 3D self-supervised parts in the proposed framework are ready.
+
 ![Overview](./figures/Overview.png)
 
+  
 ## Installation
 
 Create environment from file
