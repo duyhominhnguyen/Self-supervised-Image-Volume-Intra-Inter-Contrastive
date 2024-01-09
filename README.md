@@ -187,7 +187,7 @@ python -m torch.distributed.launch --nproc_per_node=2 ssl_deepcluster_3D.py
 ```
 
 ## Downstream Task
-After obtaining the weights from joint 2D-3D SSL, we use this weight for downstream tasks.
+After obtaining the weights `deepcluster3D.pth' and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks.
 ```bash
 # TODO: Instruction
 ```

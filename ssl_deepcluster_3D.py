@@ -66,7 +66,7 @@ parser = argparse.ArgumentParser(description="Implementation of 3D-DeepCluster-U
 #########################
 parser.add_argument("--log_dir", type=str, default= './log/' , help="path to log file")
 parser.add_argument("--tensorboard_name", type=str, default= "universal_deepcluster3D", help="name of tensorboard folder")
-parser.add_argument("--data_path", default= './Training_Data/', 
+parser.add_argument("--data_path", default= './Training_Data_3D/', 
                     type=str,
                     help="path to dataset folder")
 parser.add_argument("--target_shape", default=(64,128,128), type=tuple,
