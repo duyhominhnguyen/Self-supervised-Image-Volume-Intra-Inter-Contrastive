@@ -124,7 +124,7 @@ python ./vissl/tools/run_distributed_engines.py \
   config.HOOKS.TENSORBOARD_SETUP.USE_TENSORBOARD=true
 ```
 
-After training, the checkpoints in `.torch` format will be saved in the folder indicated by `config.CHECKPOINT.DIR`. Please use `vissl/extra_scripts/convert_vissl_to_torchvision.py` to convert them to torchvision format for the next step.
+After training, the checkpoints in `.torch` format will be saved in the folder indicated by `config.CHECKPOINT.DIR`. Please use `vissl/extra_scripts/convert_vissl_to_torchvision.py` to convert them to torchvision format for the next step. We also provide converted pre-trained weights for 2D SSL methods in this repo to save your time.
 
 ## 3D SSL Training
 
