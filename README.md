@@ -3,7 +3,7 @@
 We release the algorithm in our paper accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687). 
 
 - :construction: Downstream task illustrations.
-- :mega: **07.02.2023**: Updating scripts to train 2D self-supervised baselines.
+- :mega: **09.01.2024**: Updating scripts to train 2D self-supervised baselines.
 - :mega: **24.12.2023**: 3D self-supervised parts in the proposed framework are ready.
 
 <p align="center">
@@ -11,16 +11,16 @@ We release the algorithm in our paper accepted in [AAAI Conference on Artificial
 </p>
 
   
-## 2D SSL Training
+## 2D SSL Baselines Training
 
-### Anaconda environment
+### Anaconda Environment
 
 Install VISSL for 2D SSL training by following [this instruction](https://github.com/facebookresearch/vissl/blob/main/INSTALL.md). You should place the `vissl` folder inside this repository for convenient.
 
 ### Data Preparation
-The algorithm takes 2D images in whichever format supported by VISSL (PNG, JPG, etc.). An example for the folder structure of training data is given in the `Training_Data_2D` folder. The structure must be as follows
+The algorithm takes 2D images in whichever format supported by VISSL (PNG, JPG, etc.). An example for the folder structure of training data is given in the `training_data_2D` folder. The structure must be as follows
 ```
-Training_Data_2D
+training_data_2D
    |
    + train
    |   |
@@ -145,9 +145,9 @@ pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation -
 ```
 
 ### Data Preparation
-The algorithm takes 3D images of size `H x W x C` in NPY format as inputs. An example for the folder structure of training data is given in the `Training_Data_3D` folder. The structure must be as follows
+The algorithm takes 3D images of size `H x W x C` in NPY format as inputs. An example for the folder structure of training data is given in the `training_data_3D` folder. The structure must be as follows
 ```
-Training_Data_3D
+training_data_3D
    |
    + Dataset_1
    |    |
@@ -182,12 +182,12 @@ python -m torch.distributed.launch --nproc_per_node=2 mask_swav_3D.py
 Then, we train joint 2D-3D SSL. This step requires weights from 2D SSL and mask embedding training
 ```bash
 # For DeepCluster method
-python -m torch.distributed.launch --nproc_per_node=2 ssl_swav_3D.py
-# For SwAV method
 python -m torch.distributed.launch --nproc_per_node=2 ssl_deepcluster_3D.py
+# For SwAV method
+python -m torch.distributed.launch --nproc_per_node=2 ssl_swav_3D.py
 ```
 
-## Downstream Task
+## Downstream Tasks
 After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks.
 ```bash
 # TODO: Instruction
