@@ -188,10 +188,25 @@ python -m torch.distributed.launch --nproc_per_node=2 ssl_swav_3D.py
 ```
 
 ## Downstream Tasks
-After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks.
-```bash
-# TODO: Instruction
+After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks. In this repository, we provide the scripts for demonstrating the segmentation task in MMWHS dataset (both CT and MRI). 
+
+### Data preparation
+First, download the dataset from [this link](https://zmiclab.github.io/zxh/0/mmwhs/data.html). Please note that we only use the folders `ct_train` and `mri_train` since the test sets do not contain ground-truths. The train/test splits are as follows for both CT and MRT datasets (the numbers are image indices)
 ```
+train:
+1001, 1003, 1005, 1006, 1008, 1009, 1011,
+1014, 1015, 1016, 1017, 1018, 1020
+
+validation:
+1004, 1007, 1013
+
+test:
+1002, 1010, 1012, 1019
+```
+After downloading and organizing the data, use the scripts `mmwhs_ct.py` and `mmwhs_mr.py` to pre-process the NII images (adjust the folder paths accordingly).
+### Fine-tuning
+
+### Testing
 
 ## Citation
 ```bib
