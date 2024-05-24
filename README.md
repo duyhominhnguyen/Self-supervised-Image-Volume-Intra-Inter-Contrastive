@@ -124,7 +124,7 @@ python ./vissl/tools/run_distributed_engines.py \
   config.HOOKS.TENSORBOARD_SETUP.USE_TENSORBOARD=true
 ```
 
-After training, the checkpoints in `.torch` format will be saved in the folder indicated by `config.CHECKPOINT.DIR`. Please use `vissl/extra_scripts/convert_vissl_to_torchvision.py` to convert them to torchvision format for the next step. We also provide converted pre-trained weights for 2D SSL methods in this repo to save your time.
+After training, the checkpoints in `.torch` format will be saved in the folder indicated by `config.CHECKPOINT.DIR`. Please use `vissl/extra_scripts/convert_vissl_to_torchvision.py` to convert them to torchvision format for the next step. We also provide converted pre-trained weights for 2D SSL methods in this repository (`resnet_deepcluster2D.pth` and `resnet_swav2D.pth` in the folder `weights`) to save your time.
 
 ## 3D SSL Training
 
@@ -132,12 +132,12 @@ After training, the checkpoints in `.torch` format will be saved in the folder i
 
 Due to conflicts in different versions of nVIDIA Apex, one must deactivate the anaconda environment used in 2D SSL training before creating the environment for 3D SSL training.
 
-First, create anaconda environment from file
+First, create anaconda environment from file as
 ```
 conda env create -f env.yml
 conda activate joint-ssl
 ```
-Then, install nVIDIA Apex
+Then, install nVIDIA Apex as
 ```
 git clone https://github.com/NVIDIA/apex
 cd apex
@@ -171,26 +171,28 @@ training_data_3D
 
 ### Training Scripts
 
-First we train the mask embedding. This step requires weights from 2D SSL (included in this repository)
+First, we train the mask embedding. This step requires weights from 2D SSL (included in this repository). The commands are as follows
 ```bash
 # For DeepCluster method
 python -m torch.distributed.launch --nproc_per_node=2 mask_deepcluster_3D.py
 # For SwAV method
 python -m torch.distributed.launch --nproc_per_node=2 mask_swav_3D.py
 ```
+After training the mask embedding, we will obtain the weights `mask_deepcluster.pth` and `mask_swav.pth` in the folder `weights`.
 
-Then, we train joint 2D-3D SSL. This step requires weights from 2D SSL and mask embedding training
+Then, we train joint 2D-3D SSL. This step requires weights from 2D SSL (`resnet_deepcluster2D.pth` or `resnet_swav2D.pth`) and corresponding weights from embedding training (`mask_deepcluster.pth` or `mask_swav.pth`). These weights are available in the folder `weights`. The commands are as follows
 ```bash
 # For DeepCluster method
 python -m torch.distributed.launch --nproc_per_node=2 ssl_deepcluster_3D.py
 # For SwAV method
 python -m torch.distributed.launch --nproc_per_node=2 ssl_swav_3D.py
 ```
+After training, we will obtain the weights `deepcluster3D.pth` and `swav3D.pth` in the current folder.
 
 ## Downstream Tasks
 After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks. In this repository, we provide the scripts for demonstrating the segmentation task in MMWHS dataset (both CT and MRI). 
 
-### Data preparation
+### Data Preparation
 First, download the dataset from [this link](https://zmiclab.github.io/zxh/0/mmwhs/data.html). Please note that we only use the folders `ct_train` and `mri_train` since the test sets do not contain ground-truths. The train/test splits are as follows for both CT and MRT datasets (the numbers are image indices)
 ```
 train:
@@ -203,10 +205,31 @@ validation:
 test:
 1002, 1010, 1012, 1019
 ```
-After downloading and organizing the data, use the scripts `mmwhs_ct.py` and `mmwhs_mr.py` to pre-process the NII images (adjust the folder paths accordingly).
-### Fine-tuning
+Then, after downloading and organizing the data, use the scripts `mmwhs_ct.py` and `mmwhs_mr.py` in the folder `./downstream/preprocessing/` to pre-process the NII images (adjust the folder paths accordingly).
 
-### Testing
+### Fine-tuning and Testing
+First, update the path of `deepcluster3D.pth` and `swav3D.pth` in
+```
+./downstream/segmentation_models.pytorch/segmentation_models_pytorch/encoders/resnet.py
+```
+by editing lines 79 and 80. Then, go to `./downstream/segmentation_models.pytorch/` and run
+```
+pip install -e .
+```
+to install our customized `segmentation_models.pytorch` package.
+
+Then, updates the paths in `./downstream/train_MMWHS_argument.py` in lines 34-52 to the preprocessed datasets created in the previous `Data Preparation` step.
+
+Finally, run the following commands for fine-tuning and testing (suppose that the current folder is `downstream`)
+```
+python train_MMWHS_argument.py -pt joint-deepcluster -ds mmwhs_ct -od ./checkpoints/swav_ct -gpu 0 -l 0.01
+```
+where
+* `-pt`: `joint-deepcluster` or `joint-swav`, name of checkpoint for the joint-ssl methods.
+* `-ds`: downstream dataset, `mmwhs_ct` for MMWHS-CT and `mmwhs_mri` for MMWHS-MRI.
+* `-od`: output directory for fine-tuned weights.
+* `-gpu`: GPU ID (equivalent to `CUDA_VISIBLE_DEVICES`).
+* `-l`: learning rate.
 
 ## Citation
 ```bib
