@@ -2,9 +2,9 @@
 
 We release the algorithm in our paper accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687). 
 
-- :construction: Downstream task illustrations.
-- :mega: **09.01.2024**: Updating scripts to train 2D self-supervised baselines.
-- :mega: **24.12.2023**: 3D self-supervised parts in the proposed framework are ready.
+- :mega: **2024.05.24.**: Codes for downstream task.
+- :mega: **2024.01.09**: Updating scripts to train 2D self-supervised baselines.
+- :mega: **2023.12.24**: 3D self-supervised parts in the proposed framework are ready.
 
 <p align="center">
    <img src="./figures/Overview.png" alt="Overview" width="698.5"/>
@@ -190,14 +190,13 @@ python -m torch.distributed.launch --nproc_per_node=2 ssl_swav_3D.py
 After training, we will obtain the weights `deepcluster3D.pth` and `swav3D.pth` in the current folder.
 
 ## Downstream Tasks
-After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks. In this repository, we provide the scripts for demonstrating the segmentation task in MMWHS dataset (both CT and MRI). 
+After obtaining the weights `deepcluster3D.pth` and `swav3D.pth` from joint 2D-3D SSL training, we use these weights for downstream tasks. In this repository, we provide the scripts for demonstrating the segmentation task of MMWHS dataset (both CT and MRI). 
 
 ### Data Preparation
 First, download the dataset from [this link](https://zmiclab.github.io/zxh/0/mmwhs/data.html). Please note that we only use the folders `ct_train` and `mri_train` since the test sets do not contain ground-truths. The train/test splits are as follows for both CT and MRT datasets (the numbers are image indices)
 ```
 train:
-1001, 1003, 1005, 1006, 1008, 1009, 1011,
-1014, 1015, 1016, 1017, 1018, 1020
+1001, 1003, 1005, 1006, 1008, 1009, 1011, 1014, 1015, 1016, 1017, 1018, 1020
 
 validation:
 1004, 1007, 1013
@@ -218,7 +217,7 @@ pip install -e .
 ```
 to install our customized `segmentation_models.pytorch` package.
 
-Then, updates the paths in `./downstream/train_MMWHS_argument.py` in lines 34-52 to the preprocessed datasets created in the previous `Data Preparation` step.
+Then, updates the paths in `./downstream/train_MMWHS_argument.py` in lines 34-50 to the preprocessed datasets created in the previous `Data Preparation` step.
 
 Finally, run the following commands for fine-tuning and testing (suppose that the current folder is `downstream`)
 ```
