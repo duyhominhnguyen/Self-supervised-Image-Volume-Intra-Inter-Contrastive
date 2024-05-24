@@ -2,7 +2,7 @@
 
 We release the algorithm in our paper accepted in [AAAI Conference on Artificial Intelligence 2023](https://ojs.aaai.org/index.php/AAAI/article/view/26687). 
 
-- :mega: **2024.05.24.**: Codes for downstream task.
+- :mega: **2024.05.24**: Codes for downstream task.
 - :mega: **2024.01.09**: Updating scripts to train 2D self-supervised baselines.
 - :mega: **2023.12.24**: 3D self-supervised parts in the proposed framework are ready.
 
